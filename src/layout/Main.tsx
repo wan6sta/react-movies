@@ -33,11 +33,15 @@ class Main extends React.Component<props, state> {
 
   componentDidMount() {
     this.setState({loading: true})
-    fetch(`http://www.omdbapi.com/?apikey=${API._KEY}&s=${this.state.tempSearch}&type=${this.state.radioValue}`)
+    fetch(`https://www.omdbapi.com/?apikey=${API._KEY}&s=${this.state.tempSearch}&type=${this.state.radioValue}`)
       .then(res => res.json())
       .then(data => {
         this.setState({loading: false})
         this.setState({movies: data.Search})
+      })
+      .catch((e) => {
+        console.error(e)
+        this.setState({loading: false})
       })
   }
 
@@ -54,14 +58,15 @@ class Main extends React.Component<props, state> {
   fetchMovies = (search: string) => {
     this.setState({loading: true})
     this.setState({tempSearch: search})
-    fetch(`http://www.omdbapi.com/?apikey=${API._KEY}&s=${search}&type=${this.state.radioValue}`)
+    fetch(`https://www.omdbapi.com/?apikey=${API._KEY}&s=${search}&type=${this.state.radioValue}`)
       .then(res => res.json())
       .then(data => {
         this.setState({loading: false})
         this.setState({movies: data.Search})
       })
-      .catch(e => {
-        alert(e.message)
+      .catch((e) => {
+        console.error(e)
+        this.setState({loading: false})
       })
   }
 
